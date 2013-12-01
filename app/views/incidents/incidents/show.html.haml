@@ -40,7 +40,7 @@
 
     .tab-pane#inc-responders=render 'responders'
 
-    .tab-pane#inc-photos
+    .tab-pane#inc-photos=render 'photos'
 
   -if can? :read_case_details, resource
     .tab-pane#inc-cases=render 'cases'
