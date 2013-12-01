@@ -43,6 +43,8 @@ gem 'activeadmin',       github: 'jlaxson/active_admin', branch: 'rails4' # gith
 gem 'acts_as_flying_saucer', github: 'jlaxson/acts_as_flying_saucer', branch: 'master'
 gem 'nokogiri'
 
+gem "paperclip", "~> 3.0"
+
 # Monitoring/Alerting
 gem 'sentry-raven'
 gem 'newrelic_rpm'
