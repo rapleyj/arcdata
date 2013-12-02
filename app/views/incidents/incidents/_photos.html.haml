@@ -1,3 +1,9 @@
 
 %h3 
   Photos
+
+%hr
+%button.btn.btn-primary(data-target="#create-attachment" data-toggle="collapse") Add Photo
+.collapse#create-attachment
+  - new_attachment = Incidents::Attachment.new incident: resource
+  =render '/incidents/attachments/form', incident: resource, resource: new_attachment
