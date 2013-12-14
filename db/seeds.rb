@@ -18,11 +18,11 @@ so = arcba.counties.create name: 'Solano', vc_regex_raw: 'Solano', abbrev: 'SO'
 mr = arcba.counties.create name: 'Marin', vc_regex_raw: 'Marin', abbrev: 'MR'
 cc = arcba.counties.create name: 'Contra Costa', vc_regex_raw: 'Contra Costa', abbrev: 'CC'
 
-arcba.positions.create name: 'Chapter Configuration', hidden: true, grants_role: 'chapter_config'
-arcba.positions.create name: 'Chapter DAT Admin', hidden: true, grants_role: 'chapter_dat_admin'
+arcba.positions.create name: 'Chapter Configuration', hidden: true#, grants_role: 'chapter_config'
+arcba.positions.create name: 'Chapter DAT Admin', hidden: true#, grants_role: 'chapter_dat_admin'
 [sf, al, sm, so, mr, cc].each do |county|
-  arcba.positions.create name: "DAT Administrator - #{county.name}", vc_regex_raw: "#{county.name}.*DAT Administrator$", grants_role: 'county_dat_admin', role_scope: county.id
-  arcba.positions.create name: "Disaster Manager - #{county.name}", vc_regex_raw: "#{county.name}.*Disaster Manager$", grants_role: 'county_dat_admin', role_scope: county.id
+  arcba.positions.create name: "DAT Administrator - #{county.name}", vc_regex_raw: "#{county.name}.*DAT Administrator$"#, grants_role: 'county_dat_admin', role_scope: county.id
+  arcba.positions.create name: "Disaster Manager - #{county.name}", vc_regex_raw: "#{county.name}.*Disaster Manager$"#, grants_role: 'county_dat_admin', role_scope: county.id
 end
 
 tl = arcba.positions.create name: 'DAT Team Lead', vc_regex_raw: 'Team Lead$'
@@ -67,3 +67,60 @@ Scheduler::Shift.create county: sf, name: 'Health Services', abbrev: 'DHS', posi
 #me.email = 'jlaxson@mac.com'
 #me.password = 'test123'
 #me.save!
+
+# temporary user
+
+# Seed data for Greater Chicago chapter
+#arcchi = Roster::Chapter.create name: 'American Red Cross Greater Chicago', short_name:'ARCCHI', code: '0542', time_zone_raw: 'Central Time (US & Canada)'
+
+#all = arcchi.counties.create name: 'Chapter', abbrev: 'CH'
+#co = arcchi.counties.create name: 'Cook', fips_code: '031', vc_regex_raw: 'cook', abbrev: 'CO'
+#ad = arcchi.counties.create name: 'Adams', fips_code: '001', vc_regex_raw: 'adams', abbrev: 'AD'
+#ax = arcchi.counties.create name: 'Alexander', fips_code: '003', vc_regex_raw: 'alexander', abbrev: 'AX'
+#du = arcba.counties.create name: 'Dupage', fips_code: '043', vc_regex_raw: 'dupage', abbrev: 'DU'
+
+#incident_admin = Roster::Role.create name: 'admin', grant_name: 'incidents_admin', chapter: arcchi
+#chap_config = Roster::Role.create name: 'chap_config', grant_name: 'chapter_config', chapter: arcchi
+#cas_admin = Roster::Role.create name: 'cas_admin', grant_name: 'cas_admin', chapter: arcchi
+#dat_admin_position = Roster::Position.create name: 'Chapter DAT Admin', chapter: arcchi, roles: [incident_admin, chap_config, cas_admin]
+#dat_team_lead = Roster::Position.create name: 'DAT Team Lead', vc_regex_raw: 'Team Lead$', chapter: arcchi
+#dat_trainee = Roster::Position.create name: 'DAT Trainee', vc_regex_raw: 'Trainee$', chapter: arcchi
+#dat_dispatcher = Roster::Position.create name: 'DAT Dispatcher', vc_regex_raw: 'Dispatch$', chapter: arcchi, roles: [cas_admin]
+
+#james = Roster::Person.create chapter: arcchi, primary_county: co, first_name: "James", last_name: "Rapley", username: "rapleyj", password: "password",
+
+#home_phone: "1112223333", cell_phone: "1112223333", work_phone: "1112223333", address1: "10 10th St", city: "Chicago", state: "IL", zip: "60606"
+#Roster::CountyMembership.create person: james, county: co
+#Roster::CountyMembership.create person: james, county: ad
+#Roster::CountyMembership.create person: james, county: ax
+#Roster::CountyMembership.create person: james, county: du
+
+#Roster::PositionMembership.create position:dat_admin_position, person: james
+#Roster::PositionMembership.create position:dat_dispatcher, person: james
+
+chicago_chapter = Roster::Chapter.create name: 'Chicago', time_zone_raw: 'Central Time (US & Canada)', code:"0542", short_name:"arcchi"
+
+cook_county = Roster::County.create name:'Cook', fips_code:'031', vc_regex_raw:'cook', chapter:chicago_chapter
+adams_county = Roster::County.create name:'Adams', fips_code:'001', vc_regex_raw:'adams', chapter:chicago_chapter
+alexander_county = Roster::County.create name:'Alexander', fips_code:'003', vc_regex_raw:'alexander', chapter:chicago_chapter
+dupage_county = Roster::County.create name:'Dupage', fips_code:'043', vc_regex_raw:'dupage',chapter:chicago_chapter
+
+incident_admin = Roster::Role.create name:'admin', grant_name:'incidents_admin', chapter:chicago_chapter
+chap_config = Roster::Role.create name:'chap_config', grant_name:'chapter_config', chapter:chicago_chapter
+cas_admin = Roster::Role.create name:'cas_admin', grant_name:'cas_admin', chapter:chicago_chapter
+
+dat_admin_position = Roster::Position.create name:'Chapter DAT Admin', chapter:chicago_chapter, roles:[incident_admin, chap_config, cas_admin]
+
+dat_team_lead = Roster::Position.create name:'DAT Team Lead', vc_regex_raw:'Team Lead$', chapter:chicago_chapter
+dat_trainee = Roster::Position.create name:'DAT Trainee', vc_regex_raw:'Trainee$', chapter:chicago_chapter
+dat_dispatcher = Roster::Position.create name:'DAT Dispatcher', vc_regex_raw:'Dispatch$', chapter:chicago_chapter, roles:[cas_admin]
+
+#chuck = Roster::Person.create chapter:chicago_chapter, primary_county:cook_county, first_name:'Hon', last_name:'Chong', username:'admin', password: "password", cell_phone:'3125061270', address1:'604 W Sheridan Rd', city:'Chicago', state:'IL', zip:'60613', vc_is_active: false
+
+chuck = Roster::Person.create chapter: chicago_chapter, primary_county: cook_county, first_name: "James", last_name: "Rapley", username: "rapleyj", password: "password",
+home_phone: "1112223333", cell_phone: "1112223333", work_phone: "1112223333", address1: "10 10th St", city: "Chicago", state: "IL", zip: "60606", vc_is_active: false
+
+Roster::CountyMembership.create person: chuck, county: cook_county
+Roster::CountyMembership.create person: chuck, county: adams_county
+Roster::PositionMembership.create position:dat_admin_position, person: chuck
+Roster::PositionMembership.create position:dat_dispatcher, person: chuck
