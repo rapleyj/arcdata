@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131210011218) do
+ActiveRecord::Schema.define(version: 20131214233512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,19 @@ ActiveRecord::Schema.define(version: 20131210011218) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "incidents_attachments", force: true do |t|
+    t.integer  "incident_id"
+    t.integer  "person_id"
+    t.string   "name"
+    t.string   "description"
+    t.string   "attachment_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "incidents_attachments", ["incident_id"], name: "index_incidents_attachments_on_incident_id", using: :btree
+  add_index "incidents_attachments", ["person_id"], name: "index_incidents_attachments_on_person_id", using: :btree
 
   create_table "incidents_cas_cases", force: true do |t|
     t.integer  "cas_incident_id"
