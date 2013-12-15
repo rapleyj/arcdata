@@ -21,7 +21,6 @@ class Incidents::Incident < ActiveRecord::Base
 
   has_many :attachments, ->{ order{created_at.desc} }, class_name: 'Incidents::Attachment', inverse_of: :incident
 
-
   {evac_partner: 'evac_center', hotel_partner: 'hotel', shelter_partner: 'shelter', feeding_partner: 'feeding'}.each do |attr, role|
     has_one :"#{attr}_use", -> { where(role: role) }, class_name: 'Incidents::PartnerUse'
 
