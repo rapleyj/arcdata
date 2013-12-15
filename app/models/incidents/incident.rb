@@ -19,6 +19,9 @@ class Incidents::Incident < ActiveRecord::Base
   has_many :on_scene_responder_assignments, lambda { on_scene }, class_name: 'Incidents::ResponderAssignment', foreign_key: :incident_id 
   has_one :team_lead, lambda{ where(role: 'team_lead')}, class_name: 'Incidents::ResponderAssignment', foreign_key: 'incident_id'
 
+  has_many :attachments, ->{ order{created_at.desc} }, class_name: 'Incidents::Attachment', inverse_of: :incident
+
+
   {evac_partner: 'evac_center', hotel_partner: 'hotel', shelter_partner: 'shelter', feeding_partner: 'feeding'}.each do |attr, role|
     has_one :"#{attr}_use", -> { where(role: role) }, class_name: 'Incidents::PartnerUse'
 
