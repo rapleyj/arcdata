@@ -2,4 +2,15 @@
   Photos
   -if can? :create, resource.attachments.build
     %button.btn.btn-primary{data: {edit_panel: new_incidents_incident_attachment_path(resource)}} Add Photo
+
+- resource.attachments(true).each do |attachment|
+  %h5
+    =attachment.created_at.to_s :time
+    \-
+    =attachment.name
+    \-
+    =attachment.humanized_attachment_type
+    -if can? :update, attachment
+      %small=link_to '(edit)', edit_incidents_incident_attachment_path(resource, attachment), data: {edit_panel: edit_incidents_incident_attachment_path(resource, attachment)}
+  =simple_format attachment.description
 %hr

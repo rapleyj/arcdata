@@ -4,7 +4,7 @@ class Incidents::AttachmentsController < Incidents::EditPanelController
   protected
 
   def build_resource
-    #super.tap{|log| log.event_time ||= Time.current }
+    super.tap{}
   end
 
   def resource_params
