@@ -1,12 +1,13 @@
   
-=semantic_form_for [parent, resource], url: incidents_incident_attachment_path(parent, resource), builder: FormtasticBootstrap::FormBuilder, html: {class: 'form-horizontal'}, remote: request.xhr? do |f|
+=semantic_form_for [parent, resource], url: incidents_incident_attachment_path(parent, resource), builder: FormtasticBootstrap::FormBuilder, html: {class: 'form-horizontal', :multipart => true }, remote: request.xhr? do |f|
   .modal-header 
     %button.close(data-dismiss="modal") &times;
     %h3 Add Photo
   .modal-body
     =f.input :attachment_type, as: :assignable_select
-    =f.input :name, input_html: {rows: 1}
-    =f.input :description, input_html: {rows: 4}
+    =f.input :name
+    =f.input :description, input_html: { rows: 4 }
+    =f.file_field :attachment
   .modal-footer
     -if f.object.persisted?
       =link_to 'Delete', incidents_incident_attachment_path(parent, resource), method: 'delete', data: {confirm: 'Really delete this photo?'}, class: 'btn btn-danger'

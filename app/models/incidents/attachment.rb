@@ -2,6 +2,8 @@ class Incidents::Attachment < ActiveRecord::Base
   belongs_to :incident, class_name: 'Incidents::Incident', inverse_of: :attachments
   belongs_to :person, class_name: 'Roster::Person'
 
+  has_attached_file :attachment
+
   validates :name, :incident, presence: { allow_blank: false }
   validates :person, presence: { allow_blank: false }
 
